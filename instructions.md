@@ -23,6 +23,25 @@ Throughout this project, you'll focus on developing the following skills:
 
 ---
 
+## 📂 Project Structure
+
+Your submission must include the following files:
+
+```plaintext
+/MBTA-Web-App-Project
+├── static/
+├── templates/
+│   ├── index.html
+│   ├── mbta_station.html
+│   └── ...
+├── .env
+├── mbta_helper.py
+├── app.py
+└── README.md
+```
+
+---
+
 ## Part 1: Geocoding and Web APIs
 
 The goal for Part 1 to deal with geographical data. You will write a tool that takes an address or place name and returns the closest MBTA stop and other information about that MBTA stop. For example:
@@ -40,6 +59,8 @@ print(mbta_helper.find_stop_near("Boston Common"))
 
 APIs allow you make requests using specifically constructed URLs and return data in a nicely structured format. There are the three main steps to using any web API:
 
+> ⚠️ **Important**: Never upload your API key to GitHub. Use a `.env` file to store secrets and add it to your `.gitignore`.
+
 1. **Read the API documentation:**
 
     You should check if the API can provide the data you need, how to request that data, and what the return format will be.
@@ -52,7 +73,8 @@ APIs allow you make requests using specifically constructed URLs and return data
 
 3. **Test your application and launch to users:**
 
-    The first API we will use is the [Mapbox](https://docs.mapbox.com/api/search/geocoding/), which allows you to specify a place name or address and receive its latitude and longitude. Take a few minutes to read the documentation (it's quite good). You need to sign up and get a free API Key [here](https://account.mapbox.com/).
+    The first API we will use is the [Mapbox](https://docs.mapbox.com/api/search/geocoding/), which allows you to specify a place name or address and receive its latitude and longitude. Take a few minutes to read the documentation (it's quite good). You need to sign up and get a free API Key [here](https://account.mapbox.com/). Remember to keep your key secret!
+    You can use the `dotenv` package to load your API key from a `.env` file. This is a common practice in Python projects to keep sensitive information out of your codebase.
 
 ### 2. Structured Data Responses (JSON)
 
@@ -121,7 +143,7 @@ Then click "Execute" button. You should be able to find a generated URL in Curl.
 
 **What you need to do**: Create a function that takes a latitude and longitude and returns two values: the name of the closest MBTA stop, whether it is wheelchair accessible.
 
-**Note**: Unfortunagely there are no MBTA stops close enough (approximately a half mile) to Babson College - you have to get out into the city!
+**Note**: Unfortunately there are no MBTA stops close enough (approximately a half mile) to Babson College - you have to get out into the city!
 
 ### 5. To Wrap-up
 
@@ -190,7 +212,7 @@ What use is a web application if you can't get any data back from the user? Let'
 1. Upon visiting the index page at `http://127.0.0.1:5000/`, the user will be greeted by a page that says hello, and includes an input **form** that requests a place name.
 2. Upon clicking the 'Submit' button, the data from the form will be sent via a **POST** request to the Flask backend at the route `POST /nearest_mbta`
 3. (Optional) Perform some simple validation on the user input. You can use [wtforms](https://flask.palletsprojects.com/en/3.0.x/patterns/wtforms/) to implement the validation.
-4. The Flask backend will handle the request to `POST /nearest_mbta`. Then your app will render a `mbta_station.html` page for the user - presenting nearest MBTA stop and whether it is wheelchair accessible. In this step, you need to use/import the module you created for **Part 1**.
+4. The Flask backend will handle the request to `POST /nearest_mbta`. Then your app will render a `mbta_station.html` page for the user - presenting nearest MBTA stop and whether it is wheelchair accessible. In this step, you need to use/import the module you created for **Part 1**. The HTML templates (e.g. `index.html` and `mbta_station.html`) should be placed under the `templates/` folder. Flask requires this folder name for rendering templates.
 5. If something is wrong, the app will render a simple error page, which will include some indication that the search did not work, along with a button or link that redirects the user back to the home page.
 
 It will be up to you to make this happen. If you feel confident in your ability to implement this, go for it! If you'd like more scaffolding, continue reading.
@@ -221,12 +243,12 @@ To complete this project, the official [Flask documentation](https://flask.palle
 
 ---
 
-## Part 3: *Wow!* Factors (20%)
+## Part 3: *Wow!* Factors (25%)
 
 After completing the required parts of this project, you can spice it up by adding additional features. Some suggestions:
 
 - Refer to [6. Making it Cooler (Optional)](#6-making-it-cooler-optional) section in Part 1 and [6. Going Further (Optional)](#6-going-further-optional) section in Part 2 for more ideas.
-- Display weather information - Add real-time weather data for an extra interactive touch! Note: While the weather might be similar across locations (since we're focusing on the Greater Boston area), this feature adds a layer of engagement.  Say "hello" to our old friend, [OpenWeatherMap API](https://openweathermap.org/api).
+- Display weather information - Add real-time weather data for an extra interactive touch! Note: While the weather might be similar across locations (since we're focusing on the Greater Boston area), this feature adds a layer of engagement. Say "hello" to our old friend, [OpenWeatherMap API](https://openweathermap.org/api).
 - Any interesting events in the nearby area? Try [Ticketmaster API](https://developer.ticketmaster.com/products-and-docs/apis/getting-started/) to find out concerts, sport events information.
 - Yes, you guessed it! - More APIs. Some suggestions:
   - [public-apis/public-apis](https://github.com/public-apis/public-apis)
@@ -237,6 +259,28 @@ After completing the required parts of this project, you can spice it up by addi
   - [APIs.guru](https://apis.guru/)
   - [PublicAPIs.io](https://publicapis.io/)
 - Get Creative with AI - Stuck or looking for new ideas? Try using an AI tool for a quick brainstorming session! It can help you come up with fun feature ideas, suggest code snippets, or even troubleshoot API integrations. Think of it like having an extra teammate to bounce ideas off and make your project stand out.
+- Testing! - Write unit tests for your code. This is a great way to ensure that your code is working as expected and to catch any bugs before they become a problem. You can use the `unittest` module in Python to write and run your tests. Check out [this tutorial](https://realpython.com/python-testing/) for more information on testing in Python.
+
+---
+
+## ❗ Common Pitfalls
+
+Before wrapping up, here are some common issues students have run into. Skimming this list might save you hours of frustration.
+
+- 🔑 **API key not loaded**: If `MAPBOX_TOKEN` or your MBTA key is `None`, make sure you:
+  - Created a `.env` file,
+  - Called `load_dotenv()` in your Python script,
+  - Didn’t accidentally push `.env` to GitHub.
+  
+- 🔗 **Malformed URL**: If the API URL isn’t working, print it out (`print(url)`) and try it in your browser to see what’s wrong.
+
+- 🧠 **KeyError or IndexError with JSON data**: The JSON structure isn’t always what you expect. Use `pprint(response_data)` to explore the structure before accessing deeply nested values.
+
+- 🌐 **Form not submitting**: Make sure your HTML `<form>` uses the correct `method="POST"` and `action="/nearest_mbta"`.
+
+- 🧭 **Babson has no MBTA stops nearby**: Test with a location *in* Boston (e.g., “Fenway Park”, “Museum of Science”) so you get meaningful API results.
+
+- 💻 **Your Flask app doesn’t restart when you update code**: Run it in **debug mode** with `app.run(debug=True)`.
 
 ---
 
@@ -271,8 +315,8 @@ After you finish the project, Please write a short document for reflection.
 
 ### 3. Turning in Project
 
-1. Push your completed code and updated `README.md` to your GitHub repository (the repository where your team has been working on).
-2. Submit the project's GitHub repository URL to Canvas. In the Canvas comment section, include the names of all team members. **Note: Each team member must submit on Canvas and add this comment.**
+- Push your completed code and updated `README.md` to your GitHub repository (the repository where your team has been working on).
+- Submit the project's GitHub repository URL to Canvas. In the Canvas comment section, include the names of all team members. **Note: Each team member must submit on Canvas and add this comment.**
 
 ---
-*updated:* *11/06/2024*
+*updated:* *4/14/2025*
