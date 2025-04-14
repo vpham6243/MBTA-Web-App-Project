@@ -271,15 +271,10 @@ Before wrapping up, here are some common issues students have run into. Skimming
   - Created a `.env` file,
   - Called `load_dotenv()` in your Python script,
   - Didn’t accidentally push `.env` to GitHub.
-  
 - 🔗 **Malformed URL**: If the API URL isn’t working, print it out (`print(url)`) and try it in your browser to see what’s wrong.
-
 - 🧠 **KeyError or IndexError with JSON data**: The JSON structure isn’t always what you expect. Use `pprint(response_data)` to explore the structure before accessing deeply nested values.
-
 - 🌐 **Form not submitting**: Make sure your HTML `<form>` uses the correct `method="POST"` and `action="/nearest_mbta"`.
-
 - 🧭 **Babson has no MBTA stops nearby**: Test with a location *in* Boston (e.g., “Fenway Park”, “Museum of Science”) so you get meaningful API results.
-
 - 💻 **Your Flask app doesn’t restart when you update code**: Run it in **debug mode** with `app.run(debug=True)`.
 
 ---
