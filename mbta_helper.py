@@ -7,7 +7,6 @@ import mbta_helper
 
 from dotenv import load_dotenv
 
-
 # Load environment variables
 load_dotenv()
 
@@ -85,9 +84,15 @@ def find_stop_near(place_name: str) -> tuple[str, bool]:
     coords = get_lat_lng(place_name)
     if coords:
         lat, lon = coords
-        return get_nearest_station(lat, lon)
+        stop_info = get_nearest_station(lat, lon)
+        if stop_info:
+            station_name, is_accessible = stop_info
+            access_msg = "Wheelchair accessible" if is_accessible else "Not wheelchair accessible"
+            return station_name, access_msg
+        else:
+            return "No station found", "No accessibility info"
     else:
-        return "No location found", False
+        return "No location found", "N/A"
 
 def find_nearest_mbta_stop(place_name: str) -> tuple[str, bool]:
     return find_stop_near(place_name)
