@@ -1,6 +1,9 @@
 import os
 
 from dotenv import load_dotenv
+import mbta_helper
+
+print(mbta_helper.find_stop_near("Boston Common"))
 
 # Load environment variables
 load_dotenv()
