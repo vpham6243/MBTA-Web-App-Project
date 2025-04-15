@@ -17,6 +17,7 @@ load_dotenv()
 MAPBOX_TOKEN = os.getenv("MAPBOX_TOKEN")
 MBTA_API_KEY = os.getenv("MBTA_API_KEY")
 
+
 # Useful base URLs (you need to add the appropriate parameters for each API request)
 MAPBOX_BASE_URL = "https://api.mapbox.com/geocoding/v5/mapbox.places"
 MBTA_BASE_URL = "https://api-v3.mbta.com/stops"
@@ -42,7 +43,18 @@ def get_lat_lng(place_name: str) -> tuple[str, str]:
 
     See https://docs.mapbox.com/api/search/geocoding/ for Mapbox Geocoding API URL formatting requirements.
     """
+    place_encoded = urllib.parse.quote(place_name)
+    # REMOVE &types=poi to allow general locations
+    url = f"{MAPBOX_BASE_URL}/{place_encoded}.json?access_token={MAPBOX_TOKEN}"
+    data = get_json(url)
 
+    features = data.get("features", [])
+    if not features:
+        print(f"No location found for '{place_name}'")
+        return None
+
+    coordinates = features[0]["geometry"]["coordinates"]
+    return str(coordinates[1]), str(coordinates[0])  # lat, lon
 
 
 def get_nearest_station(latitude: str, longitude: str) -> tuple[str, bool]:
