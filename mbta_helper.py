@@ -1,12 +1,17 @@
 import os
-
-from dotenv import load_dotenv
+import json 
+import pprint
+import urllib.request
 import mbta_helper
 
-print(mbta_helper.find_stop_near("Boston Common"))
+
+from dotenv import load_dotenv
+
 
 # Load environment variables
 load_dotenv()
+
+# print(mbta_helper.find_nearest_mbta_stop("Boston Common"))
 
 # Get API keys from environment variables
 MAPBOX_TOKEN = os.getenv("MAPBOX_TOKEN")
@@ -24,7 +29,11 @@ def get_json(url: str) -> dict:
 
     Both get_lat_lng() and get_nearest_station() might need to use this function.
     """
-    pass
+    with urllib.request.urlopen(url) as resp:
+        response_text = resp.read().decode("utf-8")
+        return json.loads(response_text)
+
+
 
 
 def get_lat_lng(place_name: str) -> tuple[str, str]:
@@ -33,7 +42,7 @@ def get_lat_lng(place_name: str) -> tuple[str, str]:
 
     See https://docs.mapbox.com/api/search/geocoding/ for Mapbox Geocoding API URL formatting requirements.
     """
-    pass
+
 
 
 def get_nearest_station(latitude: str, longitude: str) -> tuple[str, bool]:
@@ -42,7 +51,17 @@ def get_nearest_station(latitude: str, longitude: str) -> tuple[str, bool]:
 
     See https://api-v3.mbta.com/docs/swagger/index.html#/Stop/ApiWeb_StopController_index for URL formatting requirements for the 'GET /stops' API.
     """
-    pass
+    url = f"{MBTA_BASE_URL}?filter[latitude]={latitude}&filter[longitude]={longitude}&sort=distance"
+    data = get_json(url)
+
+    try:
+        stop = data["data"][0]
+        name = stop["attributes"]["name"]
+        wheelchair = stop["attributes"]["wheelchair_boarding"] == 1
+        return name, wheelchair
+    except (IndexError, KeyError):
+        return None
+
 
 
 def find_stop_near(place_name: str) -> tuple[str, bool]:
@@ -51,14 +70,23 @@ def find_stop_near(place_name: str) -> tuple[str, bool]:
 
     This function might use all the functions above.
     """
-    pass
+    coords = get_lat_lng(place_name)
+    if coords:
+        lat, lon = coords
+        return get_nearest_station(lat, lon)
+    else:
+        return "No location found", False
 
+def find_nearest_mbta_stop(place_name: str) -> tuple[str, bool]:
+    return find_stop_near(place_name)
 
 def main():
     """
     You should test all the above functions here
     """
-    pass
+   
+    print(find_nearest_mbta_stop("Boston Common"))
+    print(get_lat_lng("Boston Common"))
 
 
 if __name__ == "__main__":
