@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask
 import mbta_helper
 
 import urllib.request
@@ -20,9 +20,7 @@ def post_weather():
     """
     Display the result after submitting the form
     """
-    location = request.form["city"]
-    temp = get_temp(city_name)
-    return render_template("weather-result.html", city=city_name.title(), temp=temp)
+    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
