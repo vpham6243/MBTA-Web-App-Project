@@ -16,7 +16,7 @@ def post_weather():
     """
     Display the result after submitting the form
     """
-    place = request.form.get("place", "")
+    place = request.form["place"]
   
     station_name, access_msg, lat, lon = mbta_helper.find_stop_near(place)
 
