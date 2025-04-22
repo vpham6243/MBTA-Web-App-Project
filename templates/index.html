@@ -4,20 +4,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hi</title>
   </head>
 
   <body>
     <h1>Nearest MBTA Station to You!</h1>
 
-    <h1>This is amazing app to help you find the nearest MBTA station and check whether it is wheelchair accessible or not.</h1>
-    <form action="/" method="get">
+    <h2>This is amazing app to help you find the nearest MBTA station and check whether it is wheelchair accessible or not.</h2>
+    <form action="/nearest_mbta" method="post">
         <div>
             <label for="">Location:</label>
-            <input type="text" placeholder="Enter here...">
+            <input type="text" id="place" placeholder="Enter here...">
         </div>
         <div>
-            <button>Submit</button>
+            <button type="submit">Submit</button>
         </div>
 
     </form>

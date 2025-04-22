@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Here is the Nearest Station to You:</title>
+</head>
+<body>
+    <h1>Nearest MBTA Station Results</h1>
+
+    <h2>Location: "{{ result['Nearest Station:'] }}"</h2>
+    <ul>
+        <li><strong>Nearest Station:</strong> {{ result.station }}</li>
+        <li><strong>Accessibility:</strong> {{ result.accessibility }}</li>
+        <li><strong>Current Weather:</strong> {{ result.temperature }}</li>
+    </ul>
+
+    <a href="/">Search Another Location</a>
+</body>
+</html>

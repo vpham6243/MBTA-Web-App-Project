@@ -1,26 +1,42 @@
-from flask import Flask
+from flask import Flask, render_template, request
 import mbta_helper
-
-import urllib.request
-import json
-import pprint
-
-print(mbta_helper.find_stop_near("Chinatown"))
 
 app = Flask(__name__)
 
-@app.route("/mbta")
+@app.route("/")
 def get_station():
-    """Display the form for user to input a city name"""
+    """
+    Display the form for user to input a location
+    """
     return render_template("index.html")
 
 
-@app.post("/weather")
+@app.post("/nearest_mbta")
 def post_weather():
     """
     Display the result after submitting the form
     """
-    return render_template("index.html")
+    place = request.form.get("place", "")
+  
+    station_name, access_msg, lat, lon = mbta_helper.find_stop_near(place)
+
+    if lat != "N/A":
+        temp = mbta_helper.get_temp(lat, lon)
+        result = {
+            "Nearest Station:": place,
+            "station": station_name,
+            "accessibility": access_msg,
+            "temperature": temp,
+        }
+    else:
+        result = {
+            "Nearest Station:": place,
+            "station": "No station found",
+            "accessibility": "N/A",
+            "temperature": "Weather unavailable",
+        }
+
+    return render_template("mbta_station.html", result=result)
 
 if __name__ == "__main__":
     app.run(debug=True)
