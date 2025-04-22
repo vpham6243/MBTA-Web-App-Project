@@ -29,10 +29,7 @@ def get_json(url: str) -> dict:
 
     Both get_lat_lng() and get_nearest_station() might need to use this function.
     """
-    with urllib.request.urlopen(url) as resp:
-        response_text = resp.read().decode("utf-8")
-        return json.loads(response_text)
-
+    
 
 
 def get_lat_lng(place_name: str) -> tuple[str, str]:
@@ -61,66 +58,23 @@ def get_nearest_station(latitude: str, longitude: str) -> tuple[str, bool]:
 
     See https://api-v3.mbta.com/docs/swagger/index.html#/Stop/ApiWeb_StopController_index for URL formatting requirements for the 'GET /stops' API.
     """
-    url = f"{MBTA_BASE_URL}?filter[latitude]={latitude}&filter[longitude]={longitude}&sort=distance"
-    data = get_json(url)
-
-    try:
-        stop = data["data"][0]
-        name = stop["attributes"]["name"]
-        wheelchair = stop["attributes"]["wheelchair_boarding"] == 1
-        return name, wheelchair
-    except (IndexError, KeyError):
-        return None
 
 
 
-def find_stop_near(place_name: str) -> tuple[str, str, str, str]:
-    coords = get_lat_lng(place_name)
-    if coords:
-        lat, lon = coords
-        stop_info = get_nearest_station(lat, lon)
-        if stop_info:
-            station_name, is_accessible = stop_info
-            access_msg = "Wheelchair accessible ✅" if is_accessible else "Not wheelchair accessible ❌"
-            return station_name, access_msg, lat, lon
-        else:
-            return "No station found", "No accessibility info", lat, lon
-    else:
-        return "No location found", "N/A", "N/A", "N/A"
+def find_stop_near(place_name: str) -> tuple[str, bool]:
+    """
+    Given a place name or address, return the nearest MBTA stop and whether it is wheelchair accessible.
 
-    
-def get_temp(lat: str, lon: str) -> str:
-    api_key = os.getenv("OPENWEATHER_API_KEY")
-    url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=imperial"
-
-    try:
-        with urllib.request.urlopen(url) as response:
-            response_text = response.read().decode("utf-8")
-            weather_data = json.loads(response_text)
-            return f"{weather_data['main']['temp']}°F"
-    except Exception as e:
-        return "Weather unavailable"
+    This function might use all the functions above.
+    """
 
 
-def find_nearest_mbta_stop(place_name: str) -> str:
-    station, access_msg, lat, lon = find_stop_near(place_name)
-
-    if lat != "N/A":
-        temp = get_temp(lat, lon)
-        return (
-            f"Nearest MBTA stop to {place_name}: {station}\n"
-            f"Accessibility: {access_msg}\n"
-            f"Current Temp at {place_name}: {temp}°F"
-        )
-    else:
-        return f"Could not determine MBTA stop or weather for {place_name}."
 
 def main():
     """
     You should test all the above functions here
     """
-    print(find_nearest_mbta_stop("Boston Common"))
-    print(get_lat_lng("Boston Common"))
+
 
 if __name__ == "_main_":
     main()
