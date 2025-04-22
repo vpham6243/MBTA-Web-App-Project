@@ -35,7 +35,6 @@ def get_json(url: str) -> dict:
 
 
 
-
 def get_lat_lng(place_name: str) -> tuple[str, str]:
     """
     Given a place name or address, return a (latitude, longitude) tuple with the coordinates of the given place.
@@ -125,5 +124,5 @@ def main():
     print(get_lat_lng("Boston Common"))
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     main()

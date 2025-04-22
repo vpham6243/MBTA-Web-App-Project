@@ -1,14 +1,24 @@
-from flask import Flask, render_template, request, redirect
+import os
+import json 
+import pprint
+import urllib.request
 import mbta_helper
 
 
+from dotenv import load_dotenv
 
-print(mbta_helper.find_stop_near("Chinatown"))
+# Load environment variables
+load_dotenv()
 
-app = Flask(__name__)
+# print(mbta_helper.find_nearest_mbta_stop("Boston Common"))
+
+# Get API keys from environment variables
+MAPBOX_TOKEN = os.getenv("MAPBOX_TOKEN")
+MBTA_API_KEY = os.getenv("MBTA_API_KEY")
 
 
-@app.route("/mbta")
-def get_station():
-    """Display the form for user to input a city name"""
-    return render_template("index.html")
+# Useful base URLs (you need to add the appropriate parameters for each API request)
+MAPBOX_BASE_URL = "https://api.mapbox.com/geocoding/v5/mapbox.places"
+MBTA_BASE_URL = "https://api-v3.mbta.com/stops"
+
+print(MAPBOX_BASE_URL)
