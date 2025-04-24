@@ -38,7 +38,6 @@ def post_weather():
             "temperature": "Weather unavailable",
             "lat": "N/A",
             "lon": "N/A"
-            "Please enter another location..."
         }
 
     return render_template("mbta_station.html", result=result)
