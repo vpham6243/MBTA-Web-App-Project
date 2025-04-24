@@ -9,7 +9,12 @@
   <body>
     <h1>Nearest MBTA Station to You!</h1>
 
-    <h2>This is amazing app to help you find the nearest MBTA station and check whether it is wheelchair accessible or not.</h2>
+    <h2 style="color: lightblue;">This is amazing app to help you find the nearest MBTA station and check whether it is wheelchair accessible or not.</h2>
+    <div>
+      <i>
+        Only enter locations in the Boston area...
+      </i>
+    </div>
     <form action="/nearest_mbta" method="post">
       <div>
         <label for="place">Location:</label>
@@ -17,6 +22,11 @@
       </div>
       <div>
         <button type="submit">Submit</button>
+      </div>
+      <div>
+        <img src="https://th.bing.com/th/id/OIP.wMl8xK_fCSzKf5U_8tvZqgHaHb?w=1760&h=1764&rs=1&pid=ImgDetMain"
+        alt="A map of the MBTA."
+        height="500" />
       </div>
     </form>
   

@@ -15,7 +15,12 @@
         <li><strong>Accessibility:</strong> {{ result.accessibility }}</li>
         <li><strong>Current Weather:</strong> {{ result.temperature }}</li>
     </ul>
-
-    <a href="/">Search Another Location</a>
+    <h2>This is where to find the station:</h2>
+    <iframe
+        src="https://www.google.com/maps?q={{ result.latitude }},{{ result.longitude }}&hl=es;z=14&output=embed">
+    </iframe>
+    <div>
+        <a href="/">Search Another Location</a>
+    </div>
 </body>
 </html>

@@ -27,6 +27,8 @@ def post_weather():
             "station": station_name,
             "accessibility": access_msg,
             "temperature": temp,
+            "latitude": lat,
+            "longitude": lon
         }
     else:
         result = {
@@ -34,9 +36,13 @@ def post_weather():
             "station": "No station found",
             "accessibility": "N/A",
             "temperature": "Weather unavailable",
+            "lat": "N/A",
+            "lon": "N/A"
+            "Please enter another location..."
         }
 
     return render_template("mbta_station.html", result=result)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
