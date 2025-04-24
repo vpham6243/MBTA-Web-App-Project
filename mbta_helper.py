@@ -108,9 +108,6 @@ def get_temp(lat: str, lon: str) -> str:
         return "Weather unavailable"
 
 
-print("Loaded OpenWeather Key (first 5 chars):", os.getenv("OPENWEATHER_API_KEY")[:5])
-
-
 def find_nearest_mbta_stop(place_name: str) -> str:
     station, access_msg, lat, lon = find_stop_near(place_name)
 
