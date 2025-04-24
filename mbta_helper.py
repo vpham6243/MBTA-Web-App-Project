@@ -90,8 +90,13 @@ def find_stop_near(place_name: str) -> tuple[str, str, str, str]:
 
     
 def get_temp(lat: str, lon: str) -> str:
-    api_key = os.getenv("OPENWEATHER_API_KEY")
+    api_key_raw = os.getenv("OPENWEATHER_API_KEY")
+    api_key = api_key_raw.replace(" ", "").strip()
+
+    print("🔑 Raw API key:", repr(api_key))
+
     url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=imperial"
+    print("🌦️ Weather URL:", url)
 
     try:
         with urllib.request.urlopen(url) as response:
@@ -99,7 +104,11 @@ def get_temp(lat: str, lon: str) -> str:
             weather_data = json.loads(response_text)
             return f"{weather_data['main']['temp']}°F"
     except Exception as e:
+        print("❌ Weather API failed:", e)
         return "Weather unavailable"
+
+
+print("Loaded OpenWeather Key (first 5 chars):", os.getenv("OPENWEATHER_API_KEY")[:5])
 
 
 def find_nearest_mbta_stop(place_name: str) -> str:
