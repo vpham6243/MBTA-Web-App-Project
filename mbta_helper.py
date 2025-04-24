@@ -85,6 +85,9 @@ def find_stop_near(place_name: str) -> tuple[str, str, str, str]:
             access_msg = "Wheelchair accessible ✅" if is_accessible else "Not wheelchair accessible ❌"
 =======
             access_msg = "Wheelchair accessible" if is_accessible else "Not wheelchair accessible"
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             return station_name, access_msg, lat, lon
         else:
@@ -96,6 +99,7 @@ def find_stop_near(place_name: str) -> tuple[str, str, str, str]:
 def get_temp(lat: str, lon: str) -> str:
     api_key = os.getenv("OPENWEATHER_API_KEY")
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     api_key = api_key.replace(" ", "").strip()  # this must be applied before use
 
     print("🔑 Final cleaned key:", repr(api_key))
@@ -105,11 +109,15 @@ def get_temp(lat: str, lon: str) -> str:
 =======
     url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=imperial"
 >>>>>>> Stashed changes
+=======
+    url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=imperial"
+>>>>>>> Stashed changes
 
     try:
         with urllib.request.urlopen(url) as response:
             response_text = response.read().decode("utf-8")
             weather_data = json.loads(response_text)
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
             return f"{weather_data['main']['temp']}°F"
     except Exception as e:
@@ -125,11 +133,16 @@ print("Loaded OpenWeather Key (first 5 chars):", os.getenv("OPENWEATHER_API_KEY"
 
 
 =======
+=======
+>>>>>>> Stashed changes
             return f"{weather_data['main']['temp']}F"
     except Exception as e:
         return "Weather unavailable"
 
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 def find_nearest_mbta_stop(place_name: str) -> str:
     station, access_msg, lat, lon = find_stop_near(place_name)
