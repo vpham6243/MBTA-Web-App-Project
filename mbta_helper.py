@@ -81,14 +81,7 @@ def find_stop_near(place_name: str) -> tuple[str, str, str, str]:
         stop_info = get_nearest_station(lat, lon)
         if stop_info:
             station_name, is_accessible = stop_info
-<<<<<<< Updated upstream
             access_msg = "Wheelchair accessible ✅" if is_accessible else "Not wheelchair accessible ❌"
-=======
-            access_msg = "Wheelchair accessible" if is_accessible else "Not wheelchair accessible"
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
             return station_name, access_msg, lat, lon
         else:
             return "No station found", "No accessibility info", lat, lon
@@ -97,53 +90,27 @@ def find_stop_near(place_name: str) -> tuple[str, str, str, str]:
 
     
 def get_temp(lat: str, lon: str) -> str:
-    api_key = os.getenv("OPENWEATHER_API_KEY")
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    api_key = api_key.replace(" ", "").strip()  # this must be applied before use
+    api_key_raw = os.getenv("OPENWEATHER_API_KEY")
+    api_key = api_key_raw.replace(" ", "").strip()
 
-    print("🔑 Final cleaned key:", repr(api_key))
+    print("🔑 Raw API key:", repr(api_key))
 
     url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=imperial"
     print("🌦️ Weather URL:", url)
-=======
-    url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=imperial"
->>>>>>> Stashed changes
-=======
-    url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=imperial"
->>>>>>> Stashed changes
 
     try:
         with urllib.request.urlopen(url) as response:
             response_text = response.read().decode("utf-8")
             weather_data = json.loads(response_text)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
             return f"{weather_data['main']['temp']}°F"
     except Exception as e:
         print("❌ Weather API failed:", e)
         return "Weather unavailable"
 
 
-
-
-
-
 print("Loaded OpenWeather Key (first 5 chars):", os.getenv("OPENWEATHER_API_KEY")[:5])
 
 
-=======
-=======
->>>>>>> Stashed changes
-            return f"{weather_data['main']['temp']}F"
-    except Exception as e:
-        return "Weather unavailable"
-
-
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 def find_nearest_mbta_stop(place_name: str) -> str:
     station, access_msg, lat, lon = find_stop_near(place_name)
 
@@ -162,7 +129,7 @@ def main():
     You should test all the above functions here
     """
    
-    print(find_nearest_mbta_stop("Fenway"))
+    print(find_nearest_mbta_stop("Boston Common"))
     print(get_lat_lng("Boston Common"))
 
 
